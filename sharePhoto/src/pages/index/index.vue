@@ -1,126 +1,154 @@
 <template>
-  <div @click="clickHandle">
-
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <img class="userinfo-avatar" src="/static/images/user.png" background-size="cover" />
-
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
+  <div class="index">
+    <div class="header">
+      <div class="left">
+        <image :src="userInfo.avatarUrl" />
+      </div>
+      <div class="right">
+        <ul class="rUl">
+          <li>
+            关注
+            <br />0
+          </li>
+          <li>
+            发布
+            <br />0
+          </li>
+          <li>
+            粉丝
+            <br />0
+          </li>
+        </ul>
       </div>
     </div>
-
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
-      </div>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" :value="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
-
-    <div class="all">
-        <div class="left">
-        </div>
-        <div class="right">
-        </div>
+    <div class="tabBar">
+      <ul class="tUl">
+        <li :class="isGuanzhu?'active':''" @click="changeActive">关注</li>
+        <li :class="isGuanzhu?'':'active'" @click="changeActive2">我的</li>
+      </ul>
+      <ul class="tContent">
+        <li v-if="isGuanzhu" class="mineContent">关注的内容</li>
+        <li v-else class="mineContent">
+          <ul class="contentUl">
+            <li class="contentLi"  @click="createPhoto">
+              <text>+</text>
+               <text>创建相册</text>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
+import store from "../counter/store";
 
 export default {
-  data () {
+  data() {
     return {
-      motto: 'Hello miniprograme',
-      userInfo: {
-        nickName: 'mpvue',
-        avatarUrl: 'http://mpvue.com/assets/logo.png'
-      }
-    }
+      isGuanzhu: true
+    };
   },
-
-  components: {
-    card
+  computed: {
+    userInfo() {
+      return store.state.userInfo;
+    }
   },
 
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      if (mpvuePlatform === 'wx') {
-        mpvue.switchTab({ url })
-      } else {
-        mpvue.navigateTo({ url })
-      }
+    changeActive(e) {
+      this.isGuanzhu = true;
     },
-    clickHandle (ev) {
-      console.log('clickHandle:', ev)
-      // throw {message: 'custom test'}
+    changeActive2() {
+      this.isGuanzhu = false;
+    },
+    createPhoto(){
+      mpvue.navigateTo({ url: '/pages/createPhoto/main' });
     }
   },
 
-  created () {
-    // let app = getApp()
-  }
-}
+  created() {}
+};
 </script>
 
 <style scoped>
-.userinfo {
+.index {
+  width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+}
+.header {
+  height: 200rpx;
+  width: 100%;
+  display: flex;
+}
+.left {
+  height: 100%;
+  width: 200rpx;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
+.left > image {
+  width: 50%;
+  height: 50%;
   border-radius: 50%;
 }
-
-.userinfo-nickname {
-  color: #aaa;
+.right {
+  height: 100%;
+  width: 550rpx;
 }
-
-.usermotto {
-  margin-top: 150px;
+.right > .rUl {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  align-items: center;
 }
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
+.tabBar {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 50rpx;
+  flex: 1;
+}
+.tabBar > .tUl {
+  width: 100%;
+  display: flex;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+.tabBar > .tUl > li {
+  padding: 0 20rpx;
+}
+.tabBar > .tUl > li.active {
+  background: #0f0;
+  border-radius: 50rpx;
+}
+.tContent,
+.tContent > li,
+.mineContent,
+.contentUl {
+  width: 100%;
+  height: 100%;
+}
+.contentUl{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.contentUl>li{
+  margin-top:40rpx; 
+  box-sizing: border-box;
+  padding: 30rpx;
+  width: 48%;
+  height: 400rpx;
   border: 1px solid #ccc;
-}
-.all{
-  width:7.5rem;
-  height:1rem;
-  background-color:blue;
-}
-.all:after{
-  display:block;
-  content:'';
-  clear:both;
-}
-.left{
-  float:left;
-  width:3rem;
-  height:1rem;
-  background-color:red;
-}
-
-.right{
-  float:left;
-  width:4.5rem;
-  height:1rem;
-  background-color:green;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

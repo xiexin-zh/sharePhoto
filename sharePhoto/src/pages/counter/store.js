@@ -7,17 +7,23 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    userInfo: {},
+    path:[],
+    nickName:"",
   },
   mutations: {
-    increment: (state) => {
-      const obj = state
-      obj.count += 1
+
+    getUserInfo(state, userInfo) {
+      state.userInfo = userInfo;
     },
-    decrement: (state) => {
-      const obj = state
-      obj.count -= 1
+    getPath(state,path){
+      state.path =[...state.path,...path]
+    },
+    sendNickName(state,nickName){
+      state.nickName = nickName;
     }
+
+
   }
 })
 

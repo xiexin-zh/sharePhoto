@@ -39,7 +39,7 @@
         </swiper>
       </div>
       <div class="mine-addimg">
-        <img :src="current==0?addImg:editImg" alt="">
+        <img :src="current==0?addImg:editImg" alt="" @tap="go">
       </div>
     </div>
   </div>
@@ -48,6 +48,7 @@
 <script>
 import ListTab from '../../components/list'
 import Card from '../../components/card'
+import {Photo} from "../../utils/index"
 export default {
   data() {
     return {
@@ -63,6 +64,9 @@ export default {
   methods: {
     changeCurrent(index){
       this.current=index
+    },
+    go(){
+      Photo()
     }
   },
   components:{

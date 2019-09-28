@@ -1,10 +1,6 @@
 <template>
   <div class="counter-warp">
-    <p>Vuex counter：{{ count }}</p>
-    <p>
-      <button @click="increment">+</button>
-      <button @click="decrement">-</button>
-    </p>
+    订单页
   </div>
 </template>
 

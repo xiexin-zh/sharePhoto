@@ -1,15 +1,18 @@
 {
   "pages": [
+    "pages/guide/main",
+    "pages/sharePhoto/main",
+    "pages/createPhoto/main",
+    "pages/index/main",
+    "pages/logs/main",
+    "pages/counter/main",
     "pages/mine/main",
-    "pages/detail/main",
-    "pages/test/main"
-    
+    "pages/detail/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "腾讯共享相册",
+    "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
   }
-
 }
